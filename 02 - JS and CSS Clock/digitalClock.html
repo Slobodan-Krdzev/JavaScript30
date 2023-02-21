@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Clock</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: darkslategray;
+            min-height: 100vh;
+            gap: 1rem;
+        }
+
+        .digital-clock,
+        .currentDate{
+            background-color: antiquewhite;
+            padding: 50px 50px;
+            display: flex;
+            justify-content: space-evenly;
+            gap: 3rem;
+            border-radius: 1.5rem;
+        }
+
+        .currentDate{
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        span{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 3rem;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="digital-clock">
+      <span class="hours"></span>
+      <span>:</span>
+      <span class="mins"></span>
+      <span>:</span>
+      <span class="seconds"></span>
+    </div>
+
+    <div class="currentDate">
+        <span style="font-size: 1.4rem;">Year - Mounth - Day</span>
+        <span id="date"></span>
+    </div>
+
+    <script>
+        let seconds = document.querySelector('.seconds')
+        let mins = document.querySelector('.mins')
+        let hours = document.querySelector('.hours')
+        let date = new Date()
+
+        function setTime(){
+
+            seconds.innerText = `${date.getSeconds()} ss`
+            mins.innerText = `${date.getMinutes()} mm`
+            hours.innerText = `${date.getHours()} hh`
+        }
+
+        setInterval(setTime, 1000)
+
+        let dateVisual = document.querySelector('#date')
+        dateVisual.innerText = `${date.toJSON().slice(0,10)}`
+    </script>
+  </body>
+</html>

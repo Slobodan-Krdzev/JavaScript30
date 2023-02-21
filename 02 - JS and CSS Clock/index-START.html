@@ -10,12 +10,11 @@
 
     <div class="clock">
       <div class="clock-face">
-        <div class="hand hour-hand"></div>
+        <div class="hand hour-hand" style="background-color: rgb(255, 255, 255);"></div>
         <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+        <div class="hand second-hand" style="background-color: tomato;"></div>
       </div>
     </div>
-
 
   <style>
     html {
@@ -63,11 +62,15 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.3s ease-in-out;
+      transition-timing-function: cubic-bezier(0,1, 2.7, 0.58, 1);
     }
 
   </style>
 
-  <script>
+  <script src="./main.js">
 
 
   </script>
