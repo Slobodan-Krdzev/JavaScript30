@@ -1,6 +1,6 @@
 window.addEventListener('keydown', (event) => {
     let audio = document.querySelector(`audio[data-key="${event.keyCode}"]`)
-    audio.currentTime = 0;
+    
     audio.play()
 
     let key = document.querySelector(`.key[data-key="${event.keyCode}"]`)
@@ -13,4 +13,5 @@ keys.forEach(key => {
         key.classList.remove('playing')
     })
 })
+
 

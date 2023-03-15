@@ -1,52 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Scoped CSS Variables and JS</title>
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
-  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scoped CSS Variables and JS</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <h2>Update CSS Variables with <span class="hl">JS</span></h2>
 
-  <div class="controls">
-    <label for="spacing">Spacing:</label>
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <div class="controls">
+      <label for="spacing">Spacing:</label>
+      <input
+        id="spacing"
+        type="range"
+        name="spacing"
+        min="10"
+        max="200"
+        value="0"
+        data-sizing="px"
+        class="ranges"
+      />
 
-    <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+      <label for="blur">Blur:</label>
+      <input
+        id="blur"
+        type="range"
+        name="blur"
+        min="0"
+        max="25"
+        value="0"
+        data-sizing="px"
+        class="ranges"
+      />
 
-    <label for="base">Base Color</label>
-    <input id="base" type="color" name="base" value="#ffc600">
-  </div>
+      <label for="base">Base Color</label>
+      <input id="base" type="color" name="base" value="#ffc600" />
+    </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
-
-  <style>
-
-    /*
+    <div class="img-backing">
+      <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" />
+    </div>
+    <style>
+      /*
       misc styles, nothing to do with CSS variables
     */
 
-    body {
-      text-align: center;
-      background: #193549;
-      color: white;
-      font-family: 'helvetica neue', sans-serif;
-      font-weight: 100;
-      font-size: 50px;
-    }
+      body {
+        text-align: center;
+        background: #193549;
+        color: white;
+        font-family: "helvetica neue", sans-serif;
+        font-weight: 100;
+        font-size: 50px;
+      }
 
-    .controls {
-      margin-bottom: 50px;
-    }
+      .controls {
+        margin-bottom: 50px;
+      }
 
-    input {
-      width: 100px;
-    }
-  </style>
+      input {
+        width: 100px;
+      }
+    </style>
 
-  <script>
-  </script>
+    <script>
 
-</body>
+      console.log(document.documentElement.m)
+      let inputs = ([spacing, blury, base] = [
+        document.querySelector("#spacing"),
+        document.querySelector("#blur"),
+        document.querySelector("#base"),
+      ]); 
+
+      let hl = document.querySelector('.hl')
+      hl.style.color = base.value
+
+      let img = document.querySelector("img");
+      img.style.border = `${spacing.value}px solid ${base.value}`;
+
+      inputs.forEach((input) => {
+        if (input.classList.contains("ranges")) {
+          input.addEventListener("mousemove", (e) => {
+            if (e.target == spacing) {
+              img.style.border = `${spacing.value}px solid ${base.value}`;
+            }
+            if (e.target == blury) {
+              img.style.filter = `blur(${blury.value}px)`;
+            }
+          });
+        } else {
+          input.addEventListener("change", () => {
+            img.style.borderColor = base.value;
+            hl.style.color = base.value
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
+
+<!--      
+targetirame input.values -> ovde se targetirani i smesteni vo array a potoat se zapishani vo varijabli so metod na destructuiranje
+
+targetirame ing i vednash i postavuvame stilovi za border i border collor od value-ta na spacing i base/color inputite
+se so cel koga ke se renderira stranata vednash da postavi ramka vo pravilnata boja od base/color inputot 
+ova go pravime bidejki dokolku gi nema istive koga ke se renderira stranata img ke nema ramka (i boja) no koga mouseot ke pomine preku imputite 
+prvicnata ramkata se pojavuva, so cel da go trgneme ova setiravme ushte od pocetok i koga ke projde mousot preku spacing range-ot ne stava nova ramka
+tuku veke e postavena uste od samiot load na pageot 
+
+sledno nizata inputs i pravime forEach
+toa ke ni gi dade na dlanka site inputi od nizaa
+potoa velime
+
+IF
+dokolku inputite imaat clasa range da im postavi mousemove event (za tranzicijata da odi smooth pri spacing i blur)
+koga ke se trigerira eventot za spaceing:
+- na img i postavuvame border -> (spacing.value)px solid (base.value -> za bojata)  -> border: 2px solid red primer
+
+koga ke se trigerira eventot za blur:
+- na img postavi i style -> filter: blur(blur.value px)  -> filter: blur(10px)
+
+ELSE 
+inputot koj ne e range odnosno e od tip color -> postavi change event koj ke trigerira koga ke se promeni bojata 
+koga ke se trigerira eventot zemi go valueto (bojata) i postavi ja kako style na img
+
+NAJBITNO OD SE SHTO EVENTOT E ZAKACEN NA INPUTITE 
+A GI RAZLIKUVAME SO TOA SHTO KORISTIME e.target
+SHTO OZNACUVA TOCNO KOJ ELEMENT GO TRIGERIRAL EVENTOT
+ -->
